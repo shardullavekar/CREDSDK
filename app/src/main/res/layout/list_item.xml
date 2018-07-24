@@ -3,6 +3,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <RadioButton
+        android:id="@+id/righ_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="20dp"
+        android:layout_centerVertical="true"/>
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/righ_arrow"
+        android:src="@drawable/ic_credit_card_red_400_24dp"
+        />
+
     <TextView
         android:id="@+id/problem_description"
         android:layout_width="wrap_content"
@@ -10,18 +27,9 @@
         android:layout_margin="20dp"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:text="Some description"
-        android:layout_alignParentLeft="true"
+        android:text="XX4242"
+        android:layout_toRightOf="@+id/image"
         android:layout_centerVertical="true"/>
 
-
-    <ImageView
-        android:id="@+id/righ_arrow"
-        android:src="@drawable/ic_done_black_18dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="20dp"
-        android:layout_centerVertical="true"/>
 
 </RelativeLayout>
