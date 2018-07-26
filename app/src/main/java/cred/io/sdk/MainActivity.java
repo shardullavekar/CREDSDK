@@ -1,6 +1,5 @@
 package cred.io.sdk;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,6 +7,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.ViewFlipper;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -19,8 +20,7 @@ import chat.ThreadAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ProgressDialog dialog;
-
+    private ViewFlipper viewFlipper;
     //Recyclerview objects
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
@@ -35,17 +35,22 @@ public class MainActivity extends AppCompatActivity {
     //EditText to send new message on the thread
     private EditText editTextMessage;
 
+    private ListView listView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initViews();
+        setView();
     }
 
     private void initViews() {
         recyclerView = findViewById(R.id.recyclerView);
         buttonSend = findViewById(R.id.buttonSend);
         editTextMessage = findViewById(R.id.editTextMessage);
+        viewFlipper = findViewById(R.id.myViewFlipper);
+        listView = findViewById(R.id.listview);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -101,5 +106,36 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
+    private void setView(){
+        showListView();
+    }
+
+    private void showListView() {
+        viewFlipper.setDisplayedChild(1);
+
+        initListViewAdapter();
+
+    }
+
+    private void showLikeorNot() {
+        viewFlipper.setDisplayedChild(2);
+    }
+
+    private void showRatingBar() {
+        viewFlipper.setDisplayedChild(3);
+    }
+
+    private void initListViewAdapter() {
+        ArrayList<Problem> problems = new ArrayList<>();
+        Problem problem = new Problem("1", "Account Debited but Bill Still pending");
+        Problem problem2 = new Problem("2", "Money debited multiple times");
+        Problem problem3 = new Problem("3", "Biller dashboard doesn't reflect");
+        problems.add(problem);
+        problems.add(problem2);
+        problems.add(problem3);
+
+        ProblemAdapter adapter = new ProblemAdapter(this, problems);
+        listView.setAdapter(adapter);
+    }
 
 }

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+        <TextView
+        android:id="@+id/helptitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Did this help you?"
+        android:textSize="20dp"
+        android:layout_centerHorizontal="true" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:layout_below="@+id/helptitle"
+            >
+
+            <ImageButton
+                android:id="@+id/yesbutton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_thumb_up_purple_700_24dp"
+                android:layout_marginRight="10dp"/>
+
+            <ImageButton
+                android:id="@+id/nobutton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_thumb_down_purple_400_24dp"
+                android:layout_marginLeft="10dp"/>
+
+        </LinearLayout>
+
+</RelativeLayout>
