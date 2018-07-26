@@ -4,10 +4,14 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.RatingBar;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import java.text.DateFormat;
@@ -21,21 +25,24 @@ import chat.ThreadAdapter;
 public class MainActivity extends AppCompatActivity {
 
     private ViewFlipper viewFlipper;
-    //Recyclerview objects
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView.Adapter adapter;
 
-    //ArrayList of messages to store the thread messages
     private ArrayList<Message> messages;
 
-    //Button to send new message on the thread
     private ImageButton buttonSend;
 
-    //EditText to send new message on the thread
-    private EditText editTextMessage;
+    private EditText editTextMessage, suggestionText;
 
     private ListView listView;
+
+    private ImageButton yes, no;
+
+    private Button suggestionButton, ratingSubmit;
+
+    private RatingBar ratingBar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +58,17 @@ public class MainActivity extends AppCompatActivity {
         editTextMessage = findViewById(R.id.editTextMessage);
         viewFlipper = findViewById(R.id.myViewFlipper);
         listView = findViewById(R.id.listview);
+
+        yes = findViewById(R.id.yesbutton);
+
+        no = findViewById(R.id.nobutton);
+
+        suggestionButton = findViewById(R.id.submitSuggestion);
+
+        ratingSubmit = findViewById(R.id.submitrating);
+
+        ratingBar = findViewById(R.id.ratingbar);
+
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -146,6 +164,49 @@ public class MainActivity extends AppCompatActivity {
 
         ProblemAdapter adapter = new ProblemAdapter(this, problems);
         listView.setAdapter(adapter);
+    }
+
+    private void initRating() {
+        ratingSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String rating = String.valueOf(ratingBar.getRating());
+                Toast.makeText(getApplicationContext(), rating, Toast.LENGTH_LONG).show();
+            }
+        });
+
+    }
+
+    private void initYesorno() {
+        yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "Like", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        no.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "Dislike", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void initSuggestionForm() {
+        suggestionText = findViewById(R.id.suggestionText);
+        suggestionButton = findViewById(R.id.submitSuggestion);
+
+        suggestionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (TextUtils.isEmpty(suggestionText.getText().toString())) {
+                    return;
+                }
+
+                Toast.makeText(getApplicationContext(), suggestionText.getText().toString(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
 }

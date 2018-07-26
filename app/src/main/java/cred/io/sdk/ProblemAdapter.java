@@ -32,7 +32,7 @@ public class ProblemAdapter extends ArrayAdapter<Problem> {
 
         Problem current_Problem = problemList.get(position);
 
-        TextView problem_description = (TextView) listItem.findViewById(R.id.problem_description);
+        TextView problem_description = listItem.findViewById(R.id.problem_description);
 
         problem_description.setText(current_Problem.getProblem_description());
 
