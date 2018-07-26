@@ -19,15 +19,18 @@
             android:id="@+id/myViewFlipper"
             android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:measureAllChildren="false">
 
-            <include layout="@layout/editsend"/>
+            <include layout="@layout/editsend"
+                     />
             <include layout="@layout/listview" />
             <include layout="@layout/yesno"
-                     android:layout_height="wrap_content"
-                     android:layout_width="match_parent"
                 />
             <include layout="@layout/rating"
+                />
+
+            <include layout="@layout/inputform"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 />

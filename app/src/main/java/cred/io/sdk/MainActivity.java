@@ -72,6 +72,8 @@ public class MainActivity extends AppCompatActivity {
         messages.add(message1);
         adapter.notifyDataSetChanged();
         scrollToBottom();
+
+        showListView();
     }
 
     private void scrollToBottom() {
@@ -107,7 +109,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setView(){
-        showListView();
+        showChatview();
+    }
+
+    private void showChatview() {
+        viewFlipper.setDisplayedChild(0);
     }
 
     private void showListView() {
@@ -123,6 +129,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void showRatingBar() {
         viewFlipper.setDisplayedChild(3);
+    }
+
+    private void showSuggestioninput() {
+        viewFlipper.setDisplayedChild(4);
     }
 
     private void initListViewAdapter() {
