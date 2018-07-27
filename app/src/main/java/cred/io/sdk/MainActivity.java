@@ -19,8 +19,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import adapters.ProblemAdapter;
 import chat.Message;
-import chat.ThreadAdapter;
+import adapters.ThreadAdapter;
+import pojos.Problem;
 
 public class MainActivity extends AppCompatActivity {
 

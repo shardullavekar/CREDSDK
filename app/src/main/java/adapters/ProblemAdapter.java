@@ -1,4 +1,4 @@
-package cred.io.sdk;
+package adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -11,6 +11,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import pojos.Problem;
+import cred.io.sdk.R;
 
 public class ProblemAdapter extends ArrayAdapter<Problem> {
 

@@ -14,6 +14,26 @@
         android:layout_margin="20dp"
         android:textStyle="bold"/>
 
-    <include layout="@layout/cardview" />
+    <ListView
+        android:id="@+id/topListview"
+        android:layout_below="@+id/topLable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></ListView>
+
+
+    <TextView
+        android:id="@+id/midLable"
+        android:layout_below="@+id/topListview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Other Issues"
+        android:layout_margin="20dp"
+        android:textStyle="bold"/>
+
+    <ListView
+        android:id="@+id/midListview"
+        android:layout_below="@+id/midLable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></ListView>
 
 </RelativeLayout>

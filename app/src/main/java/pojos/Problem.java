@@ -1,4 +1,4 @@
-package cred.io.sdk;
+package pojos;
 
 public class Problem {
     private String problem_description;
