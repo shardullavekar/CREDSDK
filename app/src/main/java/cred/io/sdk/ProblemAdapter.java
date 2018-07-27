@@ -28,7 +28,7 @@ public class ProblemAdapter extends ArrayAdapter<Problem> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View listItem = convertView;
         if(listItem == null)
-            listItem = LayoutInflater.from(context).inflate(R.layout.list_item,parent,false);
+            listItem = LayoutInflater.from(context).inflate(R.layout.chat_list_item,parent,false);
 
         Problem current_Problem = problemList.get(position);
 
