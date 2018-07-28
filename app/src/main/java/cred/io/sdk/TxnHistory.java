@@ -70,6 +70,7 @@ public class TxnHistory extends AppCompatActivity {
                 JSONObject row = txnArray.getJSONObject(i);
                 Transaction transaction = new Transaction();
                 transaction.setAmount(row.getString("amount"));
+                transaction.setInstrument(row.getString("instrument"));
                 transaction.setCurrency(row.getString("currency"));
                 transaction.setMerchant_name(row.getString("merchant_name"));
                 transaction.setNature(row.getString("nature"));

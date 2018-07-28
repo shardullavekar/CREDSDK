@@ -8,6 +8,8 @@ public class Transaction {
     private String currency;
     private String status;
     private String nature;
+
+    private String instrument;
     private String merchant_name;
     private String icon_url;
 
@@ -81,6 +83,14 @@ public class Transaction {
 
     public void setIcon_url(String icon_url) {
         this.icon_url = icon_url;
+    }
+
+    public String getInstrument() {
+        return instrument;
+    }
+
+    public void setInstrument(String instrument) {
+        this.instrument = instrument;
     }
 
 }

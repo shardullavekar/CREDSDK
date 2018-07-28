@@ -8,7 +8,8 @@
       "amount" : "1200.00",
       "status" : "success",
       "currency" : "INR",
-      "nature" : {"debited_from" : "4242, Wallet"},
+      "nature" : "debited",
+      "instrument" : "4242",
       "merchant_name" : "Uber India",
       "icon_url" : ""
     },
@@ -19,7 +20,8 @@
       "amount" : "1150.00",
       "currency" : "INR",
       "status" : "failed",
-      "nature" : {"debited_from" : "Kotak Mahindra Bank, Wallet"},
+      "nature" : "debited",
+      "instrument" : "4242, Wallet",
       "merchant_name" : "Saavn",
       "icon_url" : ""
     },
@@ -30,7 +32,8 @@
       "amount" : "1150.00",
       "currency" : "INR",
       "status" : "success",
-      "nature" : {"debited_from" : "Kotak Mahindra Bank"},
+      "nature" : "debited",
+      "instrument" : "Kotak Mahindra",
       "merchant_name" : "Parth Mudgal",
       "icon_url" : ""
     },
@@ -41,7 +44,8 @@
       "amount" : "3150.00",
       "currency" : "INR",
       "status" : "declined",
-      "nature" : {"debited_from" : "Wallet"},
+      "nature" : "debited",
+      "instrument" : "4242",
       "merchant_name" : "GoIbibo",
       "icon_url" : ""
     },
@@ -52,7 +56,8 @@
       "amount" : "150.00",
       "currency" : "INR",
       "status" : "success",
-      "nature" : {"credited_to" : "Wallet"},
+      "nature" : "debited",
+      "instrument" : "Wallet",
       "merchant_name" : "CRED",
       "icon_url" : ""
     },
@@ -63,7 +68,8 @@
       "amount" : "1150.00",
       "currency" : "INR",
       "status" : "success",
-      "nature" : {"credited_to" : "Kotak Mahindra Bank"},
+      "nature" : "debited",
+      "instrument" : "Kotak Mahindra",
       "merchant_name" : "Yash Sharma",
       "icon_url" : ""
     },
@@ -74,7 +80,8 @@
       "amount" : "2150.00",
       "currency" : "INR",
       "status" : "success",
-      "nature" : {"debited_from" : "Kotak Mahindra Bank"},
+      "nature" : "debited",
+      "instrument" : "Wallet",
       "merchant_name" : "Yes Bank",
       "icon_url" : ""
     }
