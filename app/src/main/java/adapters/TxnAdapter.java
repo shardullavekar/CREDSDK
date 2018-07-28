@@ -37,7 +37,7 @@ public class TxnAdapter extends RecyclerView.Adapter<TxnAdapter.TxnViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull TxnViewHolder txnViewHolder, int i) {
 
-        setImages(transactionList.get(i).getType(), "someKey", txnViewHolder);
+        setImages(transactionList.get(i).getType(), transactionList.get(i).getStatus(), txnViewHolder);
 
         txnViewHolder.merchant_name.setText(transactionList.get(i).getMerchant_name());
         txnViewHolder.txn_nature.setText(transactionList.get(i).getNature());
@@ -98,7 +98,7 @@ public class TxnAdapter extends RecyclerView.Adapter<TxnAdapter.TxnViewHolder> {
         return natureString;
     }
 
-    private void setImages(String type, String nature_key, TxnViewHolder txnViewHolder) {
+    private void setImages(String type, String status, TxnViewHolder txnViewHolder) {
         if (TextUtils.equals(type, "Credit Card Bill Paid")) {
             txnViewHolder.txn_photo.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_credit_card_purple_500_36dp));
         }
@@ -109,6 +109,14 @@ public class TxnAdapter extends RecyclerView.Adapter<TxnAdapter.TxnViewHolder> {
 
         if (TextUtils.equals(type, "Paid To")) {
             txnViewHolder.txn_photo.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_call_made_pink_a200_36dp));
+        }
+
+        if (TextUtils.equals(status, "success")) {
+            txnViewHolder.txn_status_image.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_check_cyan_900_24dp));
+        }
+
+        if (TextUtils.equals(status, "declined") || TextUtils.equals(status, "failed")) {
+            txnViewHolder.txn_status_image.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_warning_red_600_24dp));
         }
 
     }
