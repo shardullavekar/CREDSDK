@@ -1,6 +1,7 @@
 {
   "action" : "Checkout on",
   "action_id" : "101",
+  "next_state" : "showfeedback",
   "data" :[
     {
       "id" : "1",

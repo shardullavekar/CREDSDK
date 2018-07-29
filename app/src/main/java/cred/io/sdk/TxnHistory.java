@@ -78,6 +78,7 @@ public class TxnHistory extends AppCompatActivity {
                 transaction.setTimeStamp(row.getString("timestamp"));
                 transaction.setStatus(row.getString("status"));
                 transaction.setTxnId(row.getString("txnId"));
+                transaction.setReply(txnJson.getString("reply"));
                 txnList.add(transaction);
             }
         } catch (JSONException e) {

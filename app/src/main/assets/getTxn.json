@@ -1,5 +1,6 @@
 {
   "action" : "showLatestTxns",
+  "reply" : "Hey, thanks for reaching out! \n What issue are you facing?",
   "data" : [
     {
       "txnId" : "TXN1242432523LMN14",

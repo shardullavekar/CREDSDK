@@ -12,6 +12,17 @@ public class Transaction {
     private String instrument;
     private String merchant_name;
     private String icon_url;
+    private String reply;
+
+
+    public String getReply() {
+        return reply;
+    }
+
+    public void setReply(String reply) {
+        this.reply = reply;
+    }
+
 
     public String getTxnId() {
         return txnId;

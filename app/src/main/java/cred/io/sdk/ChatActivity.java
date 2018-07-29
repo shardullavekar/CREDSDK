@@ -105,7 +105,7 @@ public class ChatActivity extends AppCompatActivity {
         buttonSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sendMessage(editTextMessage.getText().toString());
+                sendMessage(editTextMessage.getText().toString(), "", "");
             }
         });
     }
@@ -126,7 +126,7 @@ public class ChatActivity extends AppCompatActivity {
             recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView, null, adapter.getItemCount() - 1);
     }
 
-    private void sendMessage(String message) {
+    private void sendMessage(String message, String next_status, String reply) {
         //final String message = editTextMessage.getText().toString().trim();
         if (message.equalsIgnoreCase(""))
             return;
@@ -143,7 +143,13 @@ public class ChatActivity extends AppCompatActivity {
 
         editTextMessage.setText("");
 
-        processMessage("CRED", "Hey!, thanks for reaching out! What issue are you facing?", "102");
+        if (TextUtils.isEmpty(reply)) {
+            return;
+        }
+
+        next_stage(next_status, reply);
+
+        //processMessage("CRED", "Hey!, thanks for reaching out! What issue are you facing?", "102");
 
     }
 
@@ -180,9 +186,13 @@ public class ChatActivity extends AppCompatActivity {
         ArrayList<Problem> problems = new ArrayList<>();
 
         JSONObject problemJson = null;
+
+        String next_state = null;
+
         try {
             Type listType = new TypeToken<List<Problem>>(){}.getType();
             problemJson = new JSONObject(chatAPI.getProblemList(problemType));
+            next_state = problemJson.getString("next_state");
             problems = gson.fromJson(problemJson.getJSONArray("data").toString(), listType);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -192,10 +202,11 @@ public class ChatActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
 
         final ArrayList<Problem> finalProblems = problems;
+        final String finalNext_state = next_state;
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                sendMessage(finalProblems.get(i).getProblem_description());
+                sendMessage(finalProblems.get(i).getProblem_description(), finalNext_state, "Ok, we see that the transaction failed because the bank page timed out.\nYou should get your money back within 8-10 working days.");
             }
         });
     }
@@ -249,14 +260,27 @@ public class ChatActivity extends AppCompatActivity {
             contextJson = new JSONObject(context);
             if (TextUtils.equals(contextJson.getString("type"), "Checkout on")) {
                 String message = "TxnId=" + contextJson.getString("txnId") + "\n" + "Status=" + contextJson.getString("status");
-                sendMessage(message);
+                sendMessage(message, "", "Hey, thanks for reaching out!\nWhat issue are you facing?");
                 showListView(contextJson.getString("type"));
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
+    }
 
+    private void next_stage(String next_state, String reply) {
+        if (TextUtils.equals(next_state, "showfeedback")) {
+            showLikeorNot();
+        }
+
+        if (TextUtils.equals(next_state, "showRating")) {
+            showRatingBar();
+        }
+
+        if (!TextUtils.isEmpty(reply)) {
+            processMessage("CRED", reply, "102");
+        }
 
     }
 
