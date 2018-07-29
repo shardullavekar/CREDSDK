@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -14,17 +15,26 @@ import android.widget.RatingBar;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.lang.reflect.Type;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import adapters.ProblemAdapter;
-import chat.Message;
 import adapters.ThreadAdapter;
+import chat.Message;
+import network.ChatAPI;
 import pojos.Problem;
 
-public class MainActivity extends AppCompatActivity {
+public class ChatActivity extends AppCompatActivity {
 
     private ViewFlipper viewFlipper;
     private RecyclerView recyclerView;
@@ -45,16 +55,28 @@ public class MainActivity extends AppCompatActivity {
 
     private RatingBar ratingBar;
 
+    private ChatAPI chatAPI;
+
+    private Gson gson;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        String context = getIntent().getStringExtra("transaction");
+
+        chatAPI = new ChatAPI(ChatActivity.this);
+
+        gson = new Gson();
+
         initViews();
-        setView();
         initRating();
         initSuggestionForm();
         initYesorno();
+
+        routeTxn(context);
     }
 
     private void initViews() {
@@ -83,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
         buttonSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sendMessage();
+                sendMessage(editTextMessage.getText().toString());
             }
         });
     }
@@ -96,7 +118,6 @@ public class MainActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
         scrollToBottom();
 
-        showListView();
     }
 
     private void scrollToBottom() {
@@ -105,8 +126,8 @@ public class MainActivity extends AppCompatActivity {
             recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView, null, adapter.getItemCount() - 1);
     }
 
-    private void sendMessage() {
-        final String message = editTextMessage.getText().toString().trim();
+    private void sendMessage(String message) {
+        //final String message = editTextMessage.getText().toString().trim();
         if (message.equalsIgnoreCase(""))
             return;
 
@@ -122,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
 
         editTextMessage.setText("");
 
-        processMessage("CRED", "Hey there, thanks for reaching out! We are looking into your issue.", "102");
+        processMessage("CRED", "Hey!, thanks for reaching out! What issue are you facing?", "102");
 
     }
 
@@ -131,18 +152,15 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
-    private void setView(){
-        showChatview();
-    }
 
     private void showChatview() {
         viewFlipper.setDisplayedChild(0);
     }
 
-    private void showListView() {
+    private void showListView(String problemType) {
         viewFlipper.setDisplayedChild(1);
 
-        initListViewAdapter();
+        initListViewAdapter(problemType);
 
     }
 
@@ -158,17 +176,28 @@ public class MainActivity extends AppCompatActivity {
         viewFlipper.setDisplayedChild(4);
     }
 
-    private void initListViewAdapter() {
+    private void initListViewAdapter(String problemType) {
         ArrayList<Problem> problems = new ArrayList<>();
-        Problem problem = new Problem("1", "Account Debited but Bill Still pending");
-        Problem problem2 = new Problem("2", "Money debited multiple times");
-        Problem problem3 = new Problem("3", "Biller dashboard doesn't reflect");
-        problems.add(problem);
-        problems.add(problem2);
-        problems.add(problem3);
+
+        JSONObject problemJson = null;
+        try {
+            Type listType = new TypeToken<List<Problem>>(){}.getType();
+            problemJson = new JSONObject(chatAPI.getProblemList(problemType));
+            problems = gson.fromJson(problemJson.getJSONArray("data").toString(), listType);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         ProblemAdapter adapter = new ProblemAdapter(this, problems);
         listView.setAdapter(adapter);
+
+        final ArrayList<Problem> finalProblems = problems;
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                sendMessage(finalProblems.get(i).getProblem_description());
+            }
+        });
     }
 
     private void initRating() {
@@ -212,6 +241,23 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), suggestionText.getText().toString(), Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    private void routeTxn(String context) {
+        JSONObject contextJson = null;
+        try {
+            contextJson = new JSONObject(context);
+            if (TextUtils.equals(contextJson.getString("type"), "Checkout on")) {
+                String message = "TxnId=" + contextJson.getString("txnId") + "\n" + "Status=" + contextJson.getString("status");
+                sendMessage(message);
+                showListView(contextJson.getString("type"));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+
     }
 
 }

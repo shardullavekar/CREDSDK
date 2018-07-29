@@ -1,0 +1,22 @@
+{
+  "action" : "Checkout on",
+  "action_id" : "101",
+  "data" :[
+    {
+      "id" : "1",
+      "description": "Money debited but transaction failed"
+    },
+    {
+      "id" : "2",
+      "description": "Money debited but Order incomplete"
+    },
+    {
+      "id" : "3",
+      "description": "I didn’t get Cashback"
+    },
+    {
+      "id" : "4",
+      "description": "I want refund for this transaction"
+    }
+  ]
+}

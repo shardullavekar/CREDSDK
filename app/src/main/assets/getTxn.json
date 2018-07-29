@@ -56,7 +56,7 @@
       "amount" : "150.00",
       "currency" : "INR",
       "status" : "success",
-      "nature" : "debited",
+      "nature" : "credited",
       "instrument" : "Wallet",
       "merchant_name" : "CRED",
       "icon_url" : ""
@@ -68,7 +68,7 @@
       "amount" : "1150.00",
       "currency" : "INR",
       "status" : "success",
-      "nature" : "debited",
+      "nature" : "credited",
       "instrument" : "Kotak Mahindra",
       "merchant_name" : "Yash Sharma",
       "icon_url" : ""

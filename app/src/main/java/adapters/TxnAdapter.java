@@ -1,6 +1,7 @@
 package adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -11,12 +12,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Iterator;
 import java.util.List;
 
+import cred.io.sdk.ChatActivity;
 import cred.io.sdk.R;
 import pojos.Transaction;
 
@@ -35,7 +39,7 @@ public class TxnAdapter extends RecyclerView.Adapter<TxnAdapter.TxnViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TxnViewHolder txnViewHolder, int i) {
+    public void onBindViewHolder(@NonNull TxnViewHolder txnViewHolder, final int i) {
 
         setImages(transactionList.get(i).getType(), transactionList.get(i).getStatus(), txnViewHolder);
 
@@ -44,6 +48,18 @@ public class TxnAdapter extends RecyclerView.Adapter<TxnAdapter.TxnViewHolder> {
         txnViewHolder.txnamount.setText(transactionList.get(i).getCurrency() + " " + transactionList.get(i).getAmount());
         txnViewHolder.txnType.setText(transactionList.get(i).getType());
         txnViewHolder.txntimestamp.setText("2PM July 23, 2018");
+
+        txnViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Gson gson = new Gson();
+                Transaction transaction = transactionList.get(i);
+                String txnJson = gson.toJson(transaction);
+                Intent i = new Intent(context, ChatActivity.class);
+                i.putExtra("transaction", txnJson);
+                context.startActivity(i);
+            }
+        });
     }
 
     @Override
