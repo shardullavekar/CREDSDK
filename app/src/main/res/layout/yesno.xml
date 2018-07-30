@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_marginTop="30dp"
+    android:layout_marginBottom="30dp">
 
         <TextView
         android:id="@+id/helptitle"
@@ -24,15 +26,17 @@
                 android:id="@+id/yesbutton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/ic_thumb_up_purple_700_24dp"
-                android:layout_marginRight="10dp"/>
+                android:src="@drawable/ic_thumb_up_teal_800_36dp"
+                android:background="@android:color/transparent"
+                android:layout_marginRight="15dp"/>
 
             <ImageButton
                 android:id="@+id/nobutton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/ic_thumb_down_purple_400_24dp"
-                android:layout_marginLeft="10dp"/>
+                android:src="@drawable/ic_thumb_down_teal_800_36dp"
+                android:background="@android:color/transparent"
+                android:layout_marginLeft="15dp"/>
 
         </LinearLayout>
 

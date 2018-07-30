@@ -49,7 +49,7 @@ public class ChatActivity extends AppCompatActivity {
 
     private ListView listView;
 
-    private ImageButton yes, no;
+    private ImageButton yes, no, chatbutton, callbutton;
 
     private Button suggestionButton, ratingSubmit;
 
@@ -89,6 +89,10 @@ public class ChatActivity extends AppCompatActivity {
         yes = findViewById(R.id.yesbutton);
 
         no = findViewById(R.id.nobutton);
+
+        chatbutton = findViewById(R.id.chatbutton);
+
+        callbutton = findViewById(R.id.callbutton);
 
         suggestionButton = findViewById(R.id.submitSuggestion);
 
@@ -149,8 +153,6 @@ public class ChatActivity extends AppCompatActivity {
 
         next_stage(next_status, reply);
 
-        //processMessage("CRED", "Hey!, thanks for reaching out! What issue are you facing?", "102");
-
     }
 
     private void initAdapter() {
@@ -182,17 +184,33 @@ public class ChatActivity extends AppCompatActivity {
         viewFlipper.setDisplayedChild(4);
     }
 
+    private void showConnectCRED() {
+        viewFlipper.setDisplayedChild(5);
+        chatbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "Integrate with Freshdesk Chat Channel", Toast.LENGTH_LONG).show();
+                finishActivity();
+            }
+        });
+
+        callbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "Someone from CRED will call you", Toast.LENGTH_LONG).show();
+                finishActivity();
+            }
+        });
+    }
+
     private void initListViewAdapter(String problemType) {
         ArrayList<Problem> problems = new ArrayList<>();
 
         JSONObject problemJson = null;
 
-        String next_state = null;
-
         try {
             Type listType = new TypeToken<List<Problem>>(){}.getType();
             problemJson = new JSONObject(chatAPI.getProblemList(problemType));
-            next_state = problemJson.getString("next_state");
             problems = gson.fromJson(problemJson.getJSONArray("data").toString(), listType);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -202,11 +220,11 @@ public class ChatActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
 
         final ArrayList<Problem> finalProblems = problems;
-        final String finalNext_state = next_state;
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                sendMessage(finalProblems.get(i).getProblem_description(), finalNext_state, "Ok, we see that the transaction failed because the bank page timed out.\nYou should get your money back within 8-10 working days.");
+
+                sendMessage(finalProblems.get(i).getProblem_description(), finalProblems.get(i).getNext_state(), finalProblems.get(i).getReply());
             }
         });
     }
@@ -217,6 +235,7 @@ public class ChatActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String rating = String.valueOf(ratingBar.getRating());
                 Toast.makeText(getApplicationContext(), rating, Toast.LENGTH_LONG).show();
+                finishActivity();
             }
         });
 
@@ -226,14 +245,14 @@ public class ChatActivity extends AppCompatActivity {
         yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "Like", Toast.LENGTH_LONG).show();
+                showRatingBar();
             }
         });
 
         no.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "Dislike", Toast.LENGTH_LONG).show();
+                showConnectCRED();
             }
         });
     }
@@ -250,6 +269,7 @@ public class ChatActivity extends AppCompatActivity {
                 }
 
                 Toast.makeText(getApplicationContext(), suggestionText.getText().toString(), Toast.LENGTH_LONG).show();
+                finishActivity();
             }
         });
     }
@@ -260,7 +280,7 @@ public class ChatActivity extends AppCompatActivity {
             contextJson = new JSONObject(context);
             if (TextUtils.equals(contextJson.getString("type"), "Checkout on")) {
                 String message = "TxnId=" + contextJson.getString("txnId") + "\n" + "Status=" + contextJson.getString("status");
-                sendMessage(message, "", "Hey, thanks for reaching out!\nWhat issue are you facing?");
+                sendMessage(message, "", contextJson.getString("reply"));
                 showListView(contextJson.getString("type"));
             }
         } catch (JSONException e) {
@@ -278,10 +298,19 @@ public class ChatActivity extends AppCompatActivity {
             showRatingBar();
         }
 
+        if (TextUtils.equals(next_state, "showYesorNo")) {
+            Toast.makeText(getApplicationContext(), "Take the user to the Rewards Page", Toast.LENGTH_LONG).show();
+            showChatview();
+        }
+
         if (!TextUtils.isEmpty(reply)) {
             processMessage("CRED", reply, "102");
         }
 
+    }
+
+    private void finishActivity() {
+        ChatActivity.this.finish();
     }
 
 }

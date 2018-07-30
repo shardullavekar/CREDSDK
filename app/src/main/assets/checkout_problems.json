@@ -1,23 +1,30 @@
 {
   "action" : "Checkout on",
   "action_id" : "101",
-  "next_state" : "showfeedback",
   "data" :[
     {
       "id" : "1",
-      "description": "Money debited but transaction failed"
+      "description": "Money debited but transaction failed",
+      "reply": "Ok, we see that the transaction failed because the bank page timed out.\n\nYou should get your money back within 8-10 working days.",
+      "next_state" : "showfeedback"
     },
     {
       "id" : "2",
-      "description": "Money debited but Order incomplete"
+      "description": "Money debited but Order incomplete",
+      "reply": "Alright, we see that the merchant has been credited this amount.\n\nWe will reach out to the merchant and keep you posted.",
+      "next_state" : "showfeedback"
     },
     {
       "id" : "3",
-      "description": "I didn’t get Cashback"
+      "description": "I didn’t get Cashback",
+      "reply": "You are not eligible to get cashback for this transaction.\nHere's why: Cashback was valid only till July 21, 2018.\n\nDo you want to check our rewards section?",
+      "next_state" : "showYesorNo"
     },
     {
       "id" : "4",
-      "description": "I want refund for this transaction"
+      "description": "I want refund for this transaction",
+      "reply": "Money for this transaction is already credited to the merchant.\n\nIn case you have further issues, please get in touch with merchant.\nThey should be able to help you here",
+      "next_state" : "showfeedback"
     }
   ]
 }

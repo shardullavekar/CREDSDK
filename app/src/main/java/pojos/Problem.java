@@ -5,6 +5,27 @@ public class Problem {
 
     private String id;
 
+    private String reply;
+
+    private String next_state;
+
+    public String getReply() {
+        return reply;
+    }
+
+    public void setReply(String reply) {
+        this.reply = reply;
+    }
+
+    public String getNext_state() {
+        return next_state;
+    }
+
+    public void setNext_state(String next_state) {
+        this.next_state = next_state;
+    }
+
+
     public Problem(String problem_id, String problem_description) {
         this.description = problem_description;
         this.id = problem_id;
